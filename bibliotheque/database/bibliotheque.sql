@@ -151,7 +151,7 @@ INSERT INTO document (titre, auteur, annee_publication, id_categorie, type_publi
   ('Les aventures du chat Pompon',   'Studio Nordet',        2021, 2, 'enfant', 1, 'Bande dessinée humoristique pour les 6-9 ans.',             '978-2900000011'),     -- 50006
   ('Les phares de la Côte-Nord',     'Collectif régional',   2019, 3, 'adulte', 5, 'Histoire et photographies des phares du golfe du Saint-Laurent.', '978-2900000028'), -- 50007
   ('Mission Galaxie',                'Pixel Boréal',         2023, 4, 'ado',    4, 'Jeu vidéo d\'exploration spatiale (Switch).',               NULL),                 -- 50008
-  ('Console de jeu portable',        'Fabricant générique',  2022, 5, 'ado',    6, 'Console portable avec deux manettes, prêt de 7 jours.',      NULL),                 -- 50009
+  ('Console de jeu portable',        'Fabricant générique',  2022, 5, 'ado',    6, 'Console portable avec deux manettes et un étui de transport.',      NULL),                 -- 50009
   ('Nosferatu',                      'F. W. Murnau',         1922, 6, 'adulte', 3, 'Classique du cinéma muet d\'épouvante.',                     NULL),                 -- 50010
   ('Le voyage dans la Lune',         'Georges Méliès',       1902, 7, 'enfant', 4, 'Film restauré, l\'un des premiers films de science-fiction.', NULL),               -- 50011
   ('Musique traditionnelle du Québec','Ensemble Les Gigueux',2018, 8, 'adulte', 10,'Compilation de reels et chansons à répondre.',              NULL),                 -- 50012
