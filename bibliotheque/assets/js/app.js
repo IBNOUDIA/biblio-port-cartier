@@ -39,7 +39,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 5) Les alertes de succès disparaissent après 8 secondes
+  // 5) La molette de la souris ne doit pas changer un code saisi (champs numériques)
+  document.querySelectorAll('input[type=number]').forEach(champ => {
+    champ.addEventListener('wheel', () => champ.blur());
+  });
+
+  // 6) Les alertes de succès disparaissent après 8 secondes
   document.querySelectorAll('.alert-success.alert-dismissible').forEach(alerte => {
     setTimeout(() => bootstrap.Alert.getOrCreateInstance(alerte).close(), 8000);
   });
