@@ -1,24 +1,37 @@
 # Bibliothèque municipale de Port-Cartier
 Projet d'intégration 2 — Programmation web
-Technologies : **HTML5, CSS3, JavaScript, PHP 8 (PDO), MySQL / MariaDB, Bootstrap 5.3**
+Technologies : **HTML5, CSS3, JavaScript, PHP 8.1 ou plus (PDO), MySQL / MariaDB, Bootstrap 5.3**
+
+> **PHP 8.1 minimum** : le code utilise le type de retour `never` (`includes/functions.php`),
+> qui provoque une erreur fatale avec PHP 8.0.
 
 ---
 
-## 1. Installation (XAMPP, WAMP ou Laragon)
+## 1. Installation (Laragon recommandé — XAMPP et WAMP fonctionnent aussi)
 
-1. Copier le dossier `biblio-port-cartier` dans :
+1. Installer **Laragon** (https://laragon.org, version « Full ») — il fournit Apache, PHP 8 et MySQL.
+2. Copier le dossier **`biblio-port-cartier`** (celui qui contient `bibliotheque/`) dans :
+   - Laragon : `C:\laragon\www\`
    - XAMPP : `C:\xampp\htdocs\`
    - WAMP : `C:\wamp64\www\`
-   - Laragon : `C:\laragon\www\`
-2. Démarrer **Apache** et **MySQL**.
-3. Ouvrir **phpMyAdmin** (`http://localhost/phpmyadmin`) → onglet **Importer** →
-   choisir `database/bibliotheque.sql` → **Exécuter**.
-   (La base `bibliotheque_port_cartier` est créée avec des données de démonstration.)
-4. Si votre MySQL a un mot de passe, modifier `config.php` (`DB_USER`, `DB_PASS`).
-5. Ouvrir `http://localhost/biblio-port-cartier/`
 
-Ouvrir le dossier dans **Visual Studio Code** (Fichier → Ouvrir le dossier).
-Extensions utiles : *PHP Intelephense*, *PHP Server*, *MySQL* (cweijan).
+   ⚠️ Ne pas faire tourner le site depuis OneDrive : la synchronisation peut verrouiller des fichiers.
+3. Démarrer **Apache** et **MySQL** (Laragon : bouton **Démarrer tout**).
+4. Importer la base de données :
+   - Laragon : bouton **Base de données** (HeidiSQL) → Fichier → Exécuter un fichier SQL →
+     `bibliotheque/database/bibliotheque.sql`
+   - XAMPP / WAMP : **phpMyAdmin** (`http://localhost/phpmyadmin`) → onglet **Importer** →
+     `bibliotheque/database/bibliotheque.sql` → **Exécuter**
+
+   (La base `bibliotheque_port_cartier` est créée avec des données de démonstration.)
+5. Si votre MySQL a un mot de passe, modifier `config.php` (`DB_USER`, `DB_PASS`).
+   Laragon, XAMPP et WAMP : utilisateur `root`, mot de passe vide par défaut.
+6. Ouvrir **`http://localhost/biblio-port-cartier/bibliotheque/`**
+7. Tester la connexion avec `admin@biblio-portcartier.ca` / `Biblio123!`.
+
+Ouvrir le dossier dans **Visual Studio Code** (Fichier → Ouvrir le dossier) : VS Code propose
+automatiquement d'installer les extensions recommandées (`.vscode/extensions.json`) :
+*PHP Intelephense*, *Error Lens*, *Database Client* (cweijan), *Code Spell Checker* (+ français).
 
 > Bootstrap et Bootstrap Icons sont inclus dans `assets/vendor/` : le site fonctionne même sans Internet.
 
@@ -103,7 +116,7 @@ change le `statut` et ajoute une date ; on conserve donc tout l'historique de ch
 ## 6. Structure des fichiers
 
 ```
-biblio-port-cartier/
+biblio-port-cartier/bibliotheque/
 ├── config.php              Paramètres BD et durée de prêt
 ├── login.php / logout.php  Connexion
 ├── index.php               Tableau de bord (selon le rôle)
