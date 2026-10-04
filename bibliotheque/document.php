@@ -28,8 +28,9 @@ if (est_personnel()) {
 
 $statutDoc = ['pret_membre' => $pret['code_membre'] ?? null, 'pret_retour_prevu' => $pret['date_retour_prevue'] ?? null,
               'res_membre' => $res['code_membre'] ?? null];
-$badgesPret = ['actif' => 'warning', 'retourne' => 'success', 'annule' => 'secondary'];
-$badgesRes  = ['active' => 'info', 'completee' => 'success', 'annulee' => 'secondary'];
+// Statut en base => [couleur du badge, libellé affiché]
+$badgesPret = ['actif' => ['warning', 'En cours'], 'retourne' => ['success', 'Retourné'], 'annule' => ['secondary', 'Annulé']];
+$badgesRes  = ['active' => ['info', 'Active'], 'completee' => ['success', 'Complétée (prêtée)'], 'annulee' => ['secondary', 'Annulée']];
 $retourUrl  = 'document.php?code=' . $code;
 
 require 'includes/header.php';
@@ -121,7 +122,7 @@ require 'includes/header.php';
           <td><?= date_fr($p['date_pret']) ?></td>
           <td><?= date_fr($p['date_retour_prevue']) ?></td>
           <td><?= date_fr($p['date_retour_effective']) ?></td>
-          <td><span class="badge text-bg-<?= $badgesPret[$p['statut']] ?>"><?= e($p['statut']) ?></span></td>
+          <td><span class="badge text-bg-<?= $badgesPret[$p['statut']][0] ?>"><?= $badgesPret[$p['statut']][1] ?></span></td>
         </tr>
       <?php endforeach; ?>
       <?php if (!$historiquePrets): ?><tr><td colspan="6" class="text-muted">Ce document n'a jamais été prêté.</td></tr><?php endif; ?>
@@ -140,7 +141,7 @@ require 'includes/header.php';
           <td><a href="membre.php?code=<?= (int)$r['code_membre'] ?>"><?= e($r['prenom'] . ' ' . $r['nom']) ?></a></td>
           <td><?= date_fr($r['date_reservation']) ?></td>
           <td><?= date_fr($r['date_fin']) ?></td>
-          <td><span class="badge text-bg-<?= $badgesRes[$r['statut']] ?>"><?= e($r['statut']) ?></span></td>
+          <td><span class="badge text-bg-<?= $badgesRes[$r['statut']][0] ?>"><?= $badgesRes[$r['statut']][1] ?></span></td>
         </tr>
       <?php endforeach; ?>
       <?php if (!$historiqueRes): ?><tr><td colspan="5" class="text-muted">Aucune réservation.</td></tr><?php endif; ?>
