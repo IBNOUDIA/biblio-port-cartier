@@ -37,7 +37,9 @@ $st->execute($params);
 $documents = $st->fetchAll();
 
 $moi = (int)utilisateur()['code'];
-$urlRetour = 'recherche.php?' . http_build_query(array_filter(['q' => $q, 'categorie' => $categorie ?: null, 'type' => $type ?: null]));
+$urlRetour = 'recherche.php?' . http_build_query(array_filter([
+    'q' => $q, 'categorie' => $categorie ?: null, 'type' => $type ?: null, 'dispo' => $dispo ? '1' : null,
+]));
 
 require 'includes/header.php';
 ?>
