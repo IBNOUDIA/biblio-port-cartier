@@ -63,7 +63,7 @@ require 'includes/header.php';
     <div class="card mb-4">
       <div class="card-header fw-semibold">Emprunts actifs (<?= count($prets) ?>)</div>
       <div class="table-responsive">
-        <table class="table mb-0 align-middle">
+        <table class="table mb-0 align-middle table-empilee">
           <thead class="table-light"><tr><th>Document</th><th>Prêté le</th><th>Retour prévu</th><th class="text-end">Actions</th></tr></thead>
           <tbody>
           <?php foreach ($prets as $p): $retard = $p['date_retour_prevue'] < $aujourdhui; ?>
@@ -71,8 +71,8 @@ require 'includes/header.php';
               <td><a href="document.php?code=<?= (int)$p['code_document'] ?>"><?= e($p['titre']) ?></a>
                   <div class="small text-muted">Doc. <?= (int)$p['code_document'] ?> · prêt no <?= (int)$p['id_pret'] ?></div>
                   <?= $p['reserve'] ? '<span class="badge text-bg-info">Réservé par un autre membre</span>' : '' ?></td>
-              <td><?= date_fr($p['date_pret']) ?></td>
-              <td><?= date_fr($p['date_retour_prevue']) ?><?= $retard ? ' <span class="badge text-bg-danger">Retard</span>' : '' ?></td>
+              <td data-label="Prêté le"><?= date_fr($p['date_pret']) ?></td>
+              <td data-label="Retour prévu"><?= date_fr($p['date_retour_prevue']) ?><?= $retard ? ' <span class="badge text-bg-danger">Retard</span>' : '' ?></td>
               <td class="text-end text-nowrap">
                 <form action="actions.php" method="post" class="d-inline">
                   <?= csrf_field() ?><input type="hidden" name="action" value="retour">
@@ -98,14 +98,14 @@ require 'includes/header.php';
     <div class="card mb-4">
       <div class="card-header fw-semibold">Réservations actives (<?= count($reservations) ?>)</div>
       <div class="table-responsive">
-        <table class="table mb-0 align-middle">
+        <table class="table mb-0 align-middle table-empilee">
           <thead class="table-light"><tr><th>Document</th><th>Réservé le</th><th>État</th><th class="text-end">Actions</th></tr></thead>
           <tbody>
           <?php foreach ($reservations as $r): ?>
             <tr>
               <td><a href="document.php?code=<?= (int)$r['code_document'] ?>"><?= e($r['titre']) ?></a><div class="small text-muted">Réservation no <?= (int)$r['id_reservation'] ?></div></td>
-              <td><?= date_fr($r['date_reservation']) ?></td>
-              <td><?= $r['encore_prete'] ? '<span class="badge text-bg-warning">Encore prêté</span>' : '<span class="badge text-bg-success">Prêt à remettre</span>' ?></td>
+              <td data-label="Réservé le"><?= date_fr($r['date_reservation']) ?></td>
+              <td data-label="État"><?= $r['encore_prete'] ? '<span class="badge text-bg-warning">Encore prêté</span>' : '<span class="badge text-bg-success">Prêt à remettre</span>' ?></td>
               <td class="text-end text-nowrap">
                 <?php if (!$r['encore_prete']): ?>
                   <form action="actions.php" method="post" class="d-inline">

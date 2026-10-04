@@ -86,7 +86,7 @@ require 'includes/header.php';
   <div class="alert alert-light border"><i class="bi bi-info-circle"></i> Aucun document ne correspond à votre recherche. Essayez d'autres mots-clés.</div>
 <?php else: ?>
   <div class="table-responsive">
-    <table class="table table-hover align-middle">
+    <table class="table table-hover align-middle table-empilee">
       <thead class="table-light">
         <tr>
           <th>Code</th><th>Titre</th><th class="d-none d-md-table-cell">Auteur / producteur</th>
@@ -101,7 +101,7 @@ require 'includes/header.php';
           $reserveParMoi = (int)$d['res_membre'] === $moi;
       ?>
         <tr>
-          <td class="text-muted small"><?= $code ?></td>
+          <td class="text-muted small" data-label="Code"><?= $code ?></td>
           <td>
             <a href="document.php?code=<?= $code ?>" class="fw-semibold text-decoration-none"><?= e($d['titre']) ?></a>
             <div class="small text-muted d-md-none"><?= e($d['auteur']) ?></div>
@@ -110,7 +110,7 @@ require 'includes/header.php';
           <td class="d-none d-md-table-cell"><?= e($d['auteur']) ?></td>
           <td class="d-none d-lg-table-cell"><?= e($d['categorie']) ?></td>
           <td class="d-none d-lg-table-cell text-capitalize"><?= e($d['type_public']) ?></td>
-          <td><?= badge_statut($d) ?></td>
+          <td data-label="Disponibilité"><?= badge_statut($d) ?></td>
           <td class="text-end text-nowrap">
             <?php if (est_membre()): ?>
               <?php if ($libre || ($reserveParMoi && empty($d['pret_membre']))): ?>
