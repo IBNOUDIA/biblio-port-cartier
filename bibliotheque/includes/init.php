@@ -7,6 +7,15 @@ require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/functions.php';
 require_once __DIR__ . '/biblio.php';
 
+// Erreur imprévue : on la journalise et on affiche une page claire, sans détails techniques
+ini_set('display_errors', '0');
+set_exception_handler(function (Throwable $ex): void {
+    error_log((string)$ex);
+    while (ob_get_level()) ob_end_clean();
+    if (!headers_sent()) http_response_code(500);
+    require __DIR__ . '/erreur.php';
+});
+
 if (session_status() === PHP_SESSION_NONE) {
     session_set_cookie_params(['httponly' => true, 'samesite' => 'Lax']);
     session_start();

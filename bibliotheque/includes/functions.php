@@ -41,8 +41,9 @@ function csrf_field(): string
 function csrf_verifier(): void
 {
     if (!hash_equals($_SESSION['csrf'] ?? '', $_POST['csrf'] ?? '')) {
-        http_response_code(400);
-        exit('Jeton de sécurité invalide. Retournez à la page précédente et rechargez-la.');
+        // Souvent : page restée ouverte trop longtemps (session expirée). Rien n'est enregistré.
+        flash('warning', "La page était restée ouverte trop longtemps : rien n'a été enregistré. Veuillez recommencer.");
+        redirect(url_retour($_POST['retour'] ?? basename($_SERVER['SCRIPT_NAME'])));
     }
 }
 
@@ -55,6 +56,27 @@ function date_fr(?string $date): string
 function post(string $cle): string
 {
     return trim((string)($_POST[$cle] ?? ''));
+}
+
+/**
+ * Vérifie que les champs ne dépassent pas la taille prévue dans la base de données.
+ * $limites : ['champ' => ['Libellé', longueur max], ...]. Retourne la liste des erreurs.
+ */
+function erreurs_longueur(array $valeurs, array $limites): array
+{
+    $erreurs = [];
+    foreach ($limites as $champ => [$libelle, $max]) {
+        if (mb_strlen($valeurs[$champ] ?? '') > $max) {
+            $erreurs[] = "$libelle ne doit pas dépasser $max caractères.";
+        }
+    }
+    return $erreurs;
+}
+
+/** Vrai si l'exception vient d'une valeur en double (ex. courriel déjà utilisé). */
+function est_doublon(PDOException $ex): bool
+{
+    return ($ex->errorInfo[1] ?? null) === 1062;
 }
 
 /** URL de retour sûre (seulement une page locale du site). */

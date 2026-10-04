@@ -25,6 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!filter_var($v['courriel'], FILTER_VALIDATE_EMAIL)) $erreurs[] = 'Courriel invalide.';
     if (strlen($mdp) < 8) $erreurs[] = 'Le mot de passe doit contenir au moins 8 caractères.';
     if ($mdp !== $mdp2) $erreurs[] = 'Les mots de passe ne correspondent pas.';
+    array_push($erreurs, ...erreurs_longueur($v, [
+        'prenom' => ['Le prénom', 60], 'nom' => ['Le nom', 60], 'adresse_numero' => ['Le numéro civique', 10],
+        'adresse_rue' => ['La rue', 100], 'ville' => ['La ville', 60], 'courriel' => ['Le courriel', 120],
+    ]));
 
     if (!$erreurs) {
         $st = db()->prepare('SELECT 1 FROM membre WHERE courriel = ? UNION SELECT 1 FROM employe WHERE courriel = ?');
@@ -33,13 +37,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (!$erreurs) {
-        $st = db()->prepare('INSERT INTO membre (nom, prenom, adresse_numero, adresse_rue, ville, province, telephone, courriel, mot_de_passe)
-                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
-        $st->execute([$v['nom'], $v['prenom'], $v['adresse_numero'], $v['adresse_rue'], $v['ville'], $v['province'],
-                      $v['telephone'], $v['courriel'], password_hash($mdp, PASSWORD_DEFAULT)]);
-        $code = (int)db()->lastInsertId();
-        flash('success', "Membre créé : {$v['prenom']} {$v['nom']} — code de membre $code.");
-        redirect('membre.php?code=' . $code);
+        try {
+            $st = db()->prepare('INSERT INTO membre (nom, prenom, adresse_numero, adresse_rue, ville, province, telephone, courriel, mot_de_passe)
+                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+            $st->execute([$v['nom'], $v['prenom'], $v['adresse_numero'], $v['adresse_rue'], $v['ville'], $v['province'],
+                          $v['telephone'], $v['courriel'], password_hash($mdp, PASSWORD_DEFAULT)]);
+            $code = (int)db()->lastInsertId();
+            flash('success', "Membre créé : {$v['prenom']} {$v['nom']} — code de membre $code.");
+            redirect('membre.php?code=' . $code);
+        } catch (PDOException $ex) {
+            if (!est_doublon($ex)) throw $ex;
+            $erreurs[] = 'Ce courriel est déjà utilisé par un autre compte.';
+        }
     }
 }
 

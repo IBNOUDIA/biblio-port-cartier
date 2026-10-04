@@ -18,6 +18,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!in_array($v['role'], ['employe', 'admin'], true))  $erreurs[] = 'Type d\'employé invalide.';
     if (strlen($mdp) < 8) $erreurs[] = 'Le mot de passe doit contenir au moins 8 caractères.';
     if ($mdp !== $mdp2)   $erreurs[] = 'Les mots de passe ne correspondent pas.';
+    array_push($erreurs, ...erreurs_longueur($v, [
+        'prenom' => ['Le prénom', 60], 'nom' => ['Le nom', 60], 'courriel' => ['Le courriel', 120],
+    ]));
 
     if (!$erreurs) {
         $st = db()->prepare('SELECT 1 FROM membre WHERE courriel = ? UNION SELECT 1 FROM employe WHERE courriel = ?');
@@ -26,11 +29,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (!$erreurs) {
-        db()->prepare('INSERT INTO employe (nom, prenom, courriel, mot_de_passe, role) VALUES (?, ?, ?, ?, ?)')
-            ->execute([$v['nom'], $v['prenom'], $v['courriel'], password_hash($mdp, PASSWORD_DEFAULT), $v['role']]);
-        $type = $v['role'] === 'admin' ? 'administrateur' : 'employé';
-        flash('success', "Compte $type créé pour {$v['prenom']} {$v['nom']} (code " . db()->lastInsertId() . ').');
-        redirect('admin_employe.php');
+        try {
+            db()->prepare('INSERT INTO employe (nom, prenom, courriel, mot_de_passe, role) VALUES (?, ?, ?, ?, ?)')
+                ->execute([$v['nom'], $v['prenom'], $v['courriel'], password_hash($mdp, PASSWORD_DEFAULT), $v['role']]);
+            $type = $v['role'] === 'admin' ? 'administrateur' : 'employé';
+            flash('success', "Compte $type créé pour {$v['prenom']} {$v['nom']} (code " . db()->lastInsertId() . ').');
+            redirect('admin_employe.php');
+        } catch (PDOException $ex) {
+            if (!est_doublon($ex)) throw $ex;
+            $erreurs[] = 'Ce courriel est déjà utilisé par un autre compte.';
+        }
     }
 }
 
