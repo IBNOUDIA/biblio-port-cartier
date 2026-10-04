@@ -8,7 +8,7 @@ $q = trim((string)($_GET['q'] ?? ''));
 $where = [];
 $params = [];
 foreach (preg_split('/\s+/', $q, -1, PREG_SPLIT_NO_EMPTY) as $mot) {
-    $like = '%' . $mot . '%';
+    $like = like_contient($mot);
     $where[] = '(m.nom LIKE ? OR m.prenom LIKE ? OR m.courriel LIKE ? OR m.telephone LIKE ? OR m.ville LIKE ? OR CAST(m.code_membre AS CHAR) = ?)';
     array_push($params, $like, $like, $like, $like, $like, $mot);
 }

@@ -12,15 +12,15 @@ $categories = db()->query('SELECT id_categorie, nom FROM categorie ORDER BY nom'
 
 /*
  * Recherche par mots-clés : chaque mot doit apparaître dans au moins un des champs
- * (titre, auteur, description, ISBN, catégorie, genre, année ou code du document).
+ * (titre, auteur, description, ISBN, catégorie, genre, public, année ou code du document).
  */
 $where  = [];
 $params = [];
 foreach (preg_split('/\s+/', $q, -1, PREG_SPLIT_NO_EMPTY) as $mot) {
-    $like = '%' . $mot . '%';
+    $like = like_contient($mot);
     $where[] = '(d.titre LIKE ? OR d.auteur LIKE ? OR d.description LIKE ? OR d.isbn LIKE ?
-                 OR c.nom LIKE ? OR g.nom LIKE ? OR CAST(d.annee_publication AS CHAR) = ? OR CAST(d.code_document AS CHAR) = ?)';
-    array_push($params, $like, $like, $like, $like, $like, $like, $mot, $mot);
+                 OR c.nom LIKE ? OR g.nom LIKE ? OR d.type_public = ? OR CAST(d.annee_publication AS CHAR) = ? OR CAST(d.code_document AS CHAR) = ?)';
+    array_push($params, $like, $like, $like, $like, $like, $like, $mot, $mot, $mot);
 }
 if ($categorie) { $where[] = 'd.id_categorie = ?'; $params[] = $categorie; }
 if (in_array($type, ['enfant', 'ado', 'adulte'], true)) { $where[] = 'd.type_public = ?'; $params[] = $type; }

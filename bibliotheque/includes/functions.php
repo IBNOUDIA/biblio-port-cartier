@@ -58,6 +58,12 @@ function post(string $cle): string
     return trim((string)($_POST[$cle] ?? ''));
 }
 
+/** Motif LIKE « contient ce mot » : les caractères spéciaux % et _ sont cherchés tels quels. */
+function like_contient(string $mot): string
+{
+    return '%' . addcslashes($mot, '%_\\') . '%';
+}
+
 /**
  * Vérifie que les champs ne dépassent pas la taille prévue dans la base de données.
  * $limites : ['champ' => ['Libellé', longueur max], ...]. Retourne la liste des erreurs.
