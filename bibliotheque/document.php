@@ -97,10 +97,20 @@ require 'includes/header.php';
               <input type="hidden" name="code_document" value="<?= $code ?>"><input type="hidden" name="retour" value="<?= $retourUrl ?>">
               <button class="btn btn-success"><i class="bi bi-box-arrow-in-down"></i> Enregistrer le retour</button>
             </form>
+            <form action="actions.php" method="post" class="d-grid" data-confirm="Annuler ce prêt ? (à utiliser en cas d'erreur de saisie)">
+              <?= csrf_field() ?><input type="hidden" name="action" value="annuler_pret">
+              <input type="hidden" name="id_pret" value="<?= (int)$pret['id_pret'] ?>"><input type="hidden" name="retour" value="<?= $retourUrl ?>">
+              <button class="btn btn-outline-danger"><i class="bi bi-x-circle"></i> Annuler le prêt</button>
+            </form>
           <?php endif; ?>
           <?php if ($res): ?>
             <p class="small mb-1 mt-2">Réservé par <a href="membre.php?code=<?= (int)$res['code_membre'] ?>"><?= e($res['prenom'] . ' ' . $res['nom']) ?></a>
                le <?= date_fr($res['date_reservation']) ?></p>
+            <form action="actions.php" method="post" class="d-grid" data-confirm="Annuler la réservation de <?= e($res['prenom'] . ' ' . $res['nom']) ?> ?">
+              <?= csrf_field() ?><input type="hidden" name="action" value="annuler_reservation">
+              <input type="hidden" name="id_reservation" value="<?= (int)$res['id_reservation'] ?>"><input type="hidden" name="retour" value="<?= $retourUrl ?>">
+              <button class="btn btn-outline-danger"><i class="bi bi-x-circle"></i> Annuler la réservation</button>
+            </form>
           <?php endif; ?>
           <a href="comptoir.php?doc=<?= $code ?>" class="btn btn-biblio"><i class="bi bi-arrow-left-right"></i> Prêter / réserver au comptoir</a>
         <?php endif; ?>

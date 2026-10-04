@@ -93,7 +93,7 @@ require 'includes/header.php';
 
 <p class="small text-muted mt-3"><i class="bi bi-info-circle"></i> Vous ne connaissez pas un code ?
   Cherchez le <a href="recherche.php">document</a> ou le <a href="membres.php">membre</a>.
-  Pour annuler un prêt ou une réservation, ouvrez le dossier du membre.</p>
+  Pour annuler un prêt ou une réservation, ouvrez le dossier du membre ou la fiche du document.</p>
 
 <h2 class="h5 mt-4">Transactions d'aujourd'hui</h2>
 <div class="table-responsive">
