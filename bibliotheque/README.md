@@ -140,7 +140,11 @@ biblio-port-cartier/bibliotheque/
 - Jeton CSRF sur tous les formulaires POST ; `htmlspecialchars()` sur tout affichage (XSS).
 - Contrôle d'accès par rôle sur chaque page (`exiger_connexion()`), régénération de l'ID de session.
 - Validation côté client (Bootstrap + JavaScript) **et** côté serveur.
-- Erreurs SQL journalisées (`error_log`) et message clair à l'utilisateur.
+- Erreurs SQL journalisées (`error_log`) et message clair à l'utilisateur ; toute erreur imprévue affiche
+  une page « Un problème est survenu » (`includes/erreur.php`) au lieu de l'erreur PHP brute.
+- Prêts, réservations et retours faits dans des transactions SQL (verrou `FOR UPDATE` sur le document).
+- Déconnexion automatique après 20 minutes d'inactivité (`INACTIVITE_MINUTES` dans `config.php`).
+- Dossiers `database/` et `includes/` bloqués depuis le navigateur (`.htaccess`).
 
 ## 8. Remise — sauvegarde de la base de données
 **Le plus simple :** MySQL démarré dans Laragon, double-cliquez sur `sauvegarder_bd.bat`

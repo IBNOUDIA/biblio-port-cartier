@@ -197,12 +197,28 @@ function retourner_document(int $codeDoc, ?int $codeEmploye): array
     $doc = trouver_document($codeDoc);
     if (!$doc) return ['ok' => false, 'msg' => "Aucun document ne porte le code $codeDoc."];
 
-    $pret = pret_actif($codeDoc);
-    if (!$pret) return ['ok' => false, 'msg' => "« {$doc['titre']} » n'est pas présentement prêté."];
+    $pdo = db();
+    $pdo->beginTransaction();
+    try {
+        // Verrouille la ligne du document pour éviter deux retours simultanés
+        $pdo->prepare('SELECT code_document FROM document WHERE code_document = ? FOR UPDATE')->execute([$codeDoc]);
 
-    db()->prepare("UPDATE pret SET statut = 'retourne', date_retour_effective = CURDATE(), code_employe_cloture = ?
-                    WHERE id_pret = ?")
-        ->execute([$codeEmploye, $pret['id_pret']]);
+        $pret = pret_actif($codeDoc);
+        if (!$pret) {
+            $pdo->rollBack();
+            return ['ok' => false, 'msg' => "« {$doc['titre']} » n'est pas présentement prêté."];
+        }
+
+        $pdo->prepare("UPDATE pret SET statut = 'retourne', date_retour_effective = CURDATE(), code_employe_cloture = ?
+                        WHERE id_pret = ?")
+            ->execute([$codeEmploye, $pret['id_pret']]);
+        $res = reservation_active($codeDoc);
+        $pdo->commit();
+    } catch (Throwable $ex) {
+        if ($pdo->inTransaction()) $pdo->rollBack();
+        error_log($ex->getMessage());
+        return ['ok' => false, 'msg' => "Erreur technique : le retour n'a pas été enregistré."];
+    }
 
     $retard = (strtotime($pret['date_retour_prevue']) < strtotime(date('Y-m-d')))
         ? ' Retour en retard de ' . (int)((strtotime(date('Y-m-d')) - strtotime($pret['date_retour_prevue'])) / 86400) . ' jour(s).'
@@ -210,7 +226,6 @@ function retourner_document(int $codeDoc, ?int $codeEmploye): array
 
     $resultat = ['ok' => true, 'msg' => "Retour enregistré : « {$doc['titre']} » (emprunté par {$pret['prenom']} {$pret['nom']}).$retard"];
 
-    $res = reservation_active($codeDoc);
     if ($res) {
         $resultat['reservation'] = $res;
         $resultat['alerte'] = "ATTENTION : ce document est RÉSERVÉ par {$res['prenom']} {$res['nom']} "
