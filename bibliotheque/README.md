@@ -105,13 +105,13 @@ change le `statut` et ajoute une date ; on conserve donc tout l'historique de ch
 | Membres et employés se connectent | 10 | `login.php` (courriel ou code membre), `logout.php` |
 | Les membres peuvent faire des prêts | 10 | Bouton **Emprunter** dans `recherche.php` / `document.php` ; employés : `comptoir.php` |
 | Les membres peuvent faire des réservations | 10 | Bouton **Réserver** ; employés : `comptoir.php` |
-| Recherche de documents par mots-clés | 10 | `recherche.php` (titre, auteur, description, ISBN, genre, catégorie, année + filtres) |
+| Recherche de documents par mots-clés | 10 | `recherche.php` (titre, auteur, description, ISBN, genre, catégorie, public, année ; sans tenir compte des accents ni des majuscules ; + filtres) |
 | Les employés font des retours | 5 | `comptoir.php`, `membre.php`, `document.php` |
-| Annuler des prêts et des réservations | 10 | `membre.php` (boutons Annuler) |
+| Annuler des prêts et des réservations | 10 | `membre.php` et `document.php` (boutons Annuler, avec confirmation) |
 | Rechercher un membre (emprunts et réservations actifs) | 10 | `membres.php` → `membre.php` |
 | Rapports à l'écran (5) | 20 | `rapports.php` : membres, retards, documents, réservés, prêtés (+ impression) |
 | L'administrateur crée membres et employés (normal/admin) | 10 | `admin_membre.php`, `admin_employe.php` |
-| Site réactif | 5 | Bootstrap 5 : menu hamburger, grilles, tableaux défilants sur mobile |
+| Site réactif | 5 | Bootstrap 5 : menu hamburger, grilles, sur mobile, les lignes du catalogue et du dossier membre deviennent des cartes (boutons toujours visibles) |
 
 ## 6. Structure des fichiers
 
@@ -129,7 +129,7 @@ biblio-port-cartier/bibliotheque/
 ├── admin_membre.php        Création de membres (admin)
 ├── admin_employe.php       Création d'employés (admin)
 ├── actions.php             Traitement de toutes les transactions (POST)
-├── includes/               init, db (PDO), fonctions, logique métier, gabarit
+├── includes/               init, db (PDO), fonctions, logique métier, gabarit, page d'erreur
 ├── assets/                 css, js, vendor (Bootstrap)
 └── database/bibliotheque.sql
 ```
