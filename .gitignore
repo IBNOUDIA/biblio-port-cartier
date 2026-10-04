@@ -1,0 +1,10 @@
+# Système / éditeur
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+
+# Journaux et sauvegardes locales
+*.log
+sauvegarde*.sql

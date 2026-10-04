@@ -1,0 +1,44 @@
+/* Bibliothèque municipale de Port-Cartier — styles complémentaires à Bootstrap */
+:root {
+  --biblio-bleu: #0b4f6c;
+  --biblio-bleu-fonce: #083a50;
+  --biblio-sable: #f5efe6;
+}
+
+.bg-biblio { background-color: var(--biblio-bleu) !important; }
+.text-biblio { color: var(--biblio-bleu) !important; }
+
+.btn-biblio {
+  --bs-btn-bg: var(--biblio-bleu);
+  --bs-btn-border-color: var(--biblio-bleu);
+  --bs-btn-hover-bg: var(--biblio-bleu-fonce);
+  --bs-btn-hover-border-color: var(--biblio-bleu-fonce);
+  --bs-btn-color: #fff;
+  --bs-btn-hover-color: #fff;
+}
+
+/* Page de connexion */
+.page-login {
+  /* Astuce : ajoutez une photo de la bibliothèque avec
+     url('../img/bibliotheque.jpg') center/cover après le dégradé */
+  background: linear-gradient(135deg, #0b4f6c, #083a50);
+}
+
+/* Bandeau d'accueil */
+.hero {
+  background: var(--biblio-sable);
+  border-left: 6px solid var(--biblio-bleu);
+}
+
+/* Cartes de statistiques */
+.carte-stat .valeur { font-size: 2rem; font-weight: 700; line-height: 1; }
+.carte-stat i { font-size: 1.75rem; opacity: .75; }
+
+/* Tableaux : en-têtes lisibles */
+.table thead th { white-space: nowrap; font-size: .85rem; text-transform: uppercase; letter-spacing: .03em; }
+
+/* Impression des rapports */
+@media print {
+  .table { font-size: 11px; }
+  a { text-decoration: none; color: #000; }
+}
