@@ -10,5 +10,6 @@ define('DB_PASS', '');          // XAMPP : vide par défaut. MAMP : 'root'.
 
 define('NOM_SITE', 'Bibliothèque municipale de Port-Cartier');
 define('DUREE_PRET_JOURS', 21); // durée d'un prêt
+define('INACTIVITE_MINUTES', 20); // déconnexion automatique après ce délai sans activité
 
 date_default_timezone_set('America/Toronto');

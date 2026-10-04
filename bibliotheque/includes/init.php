@@ -21,6 +21,15 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Déconnexion automatique (ex. : employé qui oublie de se déconnecter au comptoir)
+if (isset($_SESSION['user'], $_SESSION['derniere_activite'])
+    && time() - $_SESSION['derniere_activite'] > INACTIVITE_MINUTES * 60) {
+    unset($_SESSION['user']);
+    session_regenerate_id(true);
+    flash('info', 'Vous avez été déconnecté après ' . INACTIVITE_MINUTES . ' minutes d\'inactivité. Veuillez vous reconnecter.');
+}
+$_SESSION['derniere_activite'] = time();
+
 /* ---------- Authentification et rôles ---------- */
 // Rôles possibles : 'membre', 'employe', 'admin'
 
@@ -42,7 +51,8 @@ function est_admin(): bool     { return role() === 'admin'; }
 function exiger_connexion(array $roles = []): void
 {
     if (!utilisateur()) {
-        flash('warning', 'Veuillez vous connecter pour accéder au site.');
+        // Pas de second message si on vient d'annoncer la déconnexion automatique
+        if (empty($_SESSION['flash'])) flash('warning', 'Veuillez vous connecter pour accéder au site.');
         redirect('login.php');
     }
     if ($roles && !in_array(role(), $roles, true)) {
