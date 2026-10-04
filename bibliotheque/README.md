@@ -143,8 +143,12 @@ biblio-port-cartier/bibliotheque/
 - Erreurs SQL journalisées (`error_log`) et message clair à l'utilisateur.
 
 ## 8. Remise — sauvegarde de la base de données
-phpMyAdmin → sélectionner `bibliotheque_port_cartier` → **Exporter** → SQL → Exécuter.
+**Le plus simple :** MySQL démarré dans Laragon, double-cliquez sur `sauvegarder_bd.bat`
+(à la racine de `biblio-port-cartier/`). Le fichier `bibliotheque/database/sauvegarde_bd_AAAA-MM-JJ_HHMM.sql`
+est créé : c'est lui qu'il faut remettre. Il contient l'état réel de la base (et non les données de départ).
+
+Autres méthodes : phpMyAdmin → sélectionner `bibliotheque_port_cartier` → **Exporter** → SQL → Exécuter.
 Ou en ligne de commande :
 ```
-mysqldump -u root -p --default-character-set=utf8mb4 bibliotheque_port_cartier > sauvegarde.sql
+mysqldump -u root --default-character-set=utf8mb4 --databases bibliotheque_port_cartier > sauvegarde.sql
 ```
