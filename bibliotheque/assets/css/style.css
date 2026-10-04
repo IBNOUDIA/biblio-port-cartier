@@ -5,6 +5,11 @@
   --biblio-sable: #f5efe6;
 }
 
+/* Menu : chaque lien reste sur une ligne (icône à côté du texte) */
+.navbar-nav .nav-link { white-space: nowrap; }
+/* Écrans moyens (1200-1399 px) : on masque le badge du rôle pour que le menu tienne sur une ligne */
+@media (min-width: 1200px) and (max-width: 1399.98px) { .role-menu { display: none; } }
+
 .bg-biblio { background-color: var(--biblio-bleu) !important; }
 .text-biblio { color: var(--biblio-bleu) !important; }
 

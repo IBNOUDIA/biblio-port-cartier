@@ -17,7 +17,7 @@ $actif = fn(string ...$p) => in_array($page, $p, true) ? ' active" aria-current=
 </head>
 <body class="d-flex flex-column min-vh-100">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-biblio shadow-sm d-print-none">
+<nav class="navbar navbar-expand-xl navbar-dark bg-biblio shadow-sm d-print-none">
   <div class="container">
     <a class="navbar-brand d-flex align-items-center gap-2" href="index.php">
       <i class="bi bi-book-half fs-4"></i>
@@ -57,12 +57,12 @@ $actif = fn(string ...$p) => in_array($page, $p, true) ? ' active" aria-current=
       </ul>
 
       <?php if ($u): ?>
-        <div class="d-flex align-items-center gap-2 text-white mt-2 mt-lg-0">
-          <span class="small">
+        <div class="d-flex align-items-center gap-2 text-white mt-2 mt-xl-0">
+          <span class="small text-nowrap">
             <i class="bi bi-person-circle"></i> <?= e($u['prenom'] . ' ' . $u['nom']) ?>
-            <span class="badge bg-light text-dark ms-1"><?= e(['membre' => 'Membre', 'employe' => 'Employé', 'admin' => 'Administrateur'][$u['role']]) ?></span>
+            <span class="badge bg-light text-dark ms-1 role-menu"><?= e(['membre' => 'Membre', 'employe' => 'Employé', 'admin' => 'Administrateur'][$u['role']]) ?></span>
           </span>
-          <a class="btn btn-sm btn-outline-light" href="logout.php"><i class="bi bi-box-arrow-right"></i> Déconnexion</a>
+          <a class="btn btn-sm btn-outline-light text-nowrap" href="logout.php"><i class="bi bi-box-arrow-right"></i> Déconnexion</a>
         </div>
       <?php endif; ?>
     </div>
