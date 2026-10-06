@@ -133,7 +133,7 @@ INSERT INTO genre (nom) VALUES
 SET @mdp = '$2y$10$ClrNTk.fMFW3D8p8mMz44OwOyxSYFHU/IJ8Q6CfbCwYNYQ8wjriWS';
 
 INSERT INTO employe (nom, prenom, courriel, mot_de_passe, role) VALUES
-  ('Tremblay', 'Sophie', 'admin@biblio-portcartier.ca',   @mdp, 'admin'),    -- 101
+  ('Dia',      'Amar',   'admin@biblio-portcartier.ca',   @mdp, 'admin'),    -- 101
   ('Gagnon',   'Marc',   'employe@biblio-portcartier.ca', @mdp, 'employe');  -- 102
 
 INSERT INTO membre (nom, prenom, adresse_numero, adresse_rue, ville, province, telephone, courriel, mot_de_passe) VALUES
