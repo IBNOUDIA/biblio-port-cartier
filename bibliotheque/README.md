@@ -35,6 +35,9 @@ automatiquement d'installer les extensions recommandées (`.vscode/extensions.js
 
 > Bootstrap et Bootstrap Icons sont inclus dans `assets/vendor/` : le site fonctionne même sans Internet.
 
+**Démarrage rapide (Laragon déjà installé) :** double-cliquez sur `demarrer_site.bat`, à la racine de
+`biblio-port-cartier/`. Il lance MySQL et Apache sans ouvrir Laragon, puis ouvre le site.
+
 ## 2. Comptes de démonstration
 
 Mot de passe de tous les comptes : **`Biblio123!`**
