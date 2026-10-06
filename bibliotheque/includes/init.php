@@ -1,6 +1,6 @@
 <?php
 /**
- * Fichier inclus en tête de chaque page : configuration, BD, session, sécurité.
+ * Inclus au début de chaque page : configuration, base de données, session et rôles.
  */
 require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/db.php';

@@ -5,7 +5,7 @@ function e($valeur): string
     return htmlspecialchars((string)($valeur ?? ''), ENT_QUOTES, 'UTF-8');
 }
 
-function redirect(string $url): never
+function redirect(string $url): void
 {
     header('Location: ' . $url);
     exit;

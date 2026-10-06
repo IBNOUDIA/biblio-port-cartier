@@ -1,7 +1,7 @@
 <?php
 /**
- * Point d'entrée unique des transactions (formulaires POST) :
- * prêt, réservation, retour, annulation de prêt, annulation de réservation.
+ * Reçoit tous les formulaires d'opération : prêt, réservation, retour,
+ * annulation d'un prêt et annulation d'une réservation.
  */
 require 'includes/init.php';
 exiger_connexion();

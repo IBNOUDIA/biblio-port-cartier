@@ -1,8 +1,6 @@
 <?php
 /**
- * Connexion PDO unique (patron singleton).
- * Les erreurs SQL lèvent des exceptions, interceptées et journalisées
- * sans afficher de détails techniques à l'utilisateur.
+ * Connexion à la base de données (une seule connexion, réutilisée par toute la page).
  */
 function db(): PDO
 {

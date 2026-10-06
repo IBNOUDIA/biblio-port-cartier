@@ -21,11 +21,6 @@ if (est_membre()) {
             (SELECT COUNT(*) FROM reservation WHERE statut = 'active') AS reservations")->fetch();
 }
 
-// Nouveautés (6 derniers documents ajoutés)
-$nouveautes = db()->query('SELECT d.code_document, d.titre, d.auteur, c.nom AS categorie, ' . sql_colonnes_statut() . '
-                             FROM document d JOIN categorie c ON c.id_categorie = d.id_categorie
-                            ORDER BY d.code_document DESC LIMIT 6')->fetchAll();
-
 require 'includes/header.php';
 ?>
 
@@ -89,21 +84,5 @@ require 'includes/header.php';
     <?php endif; ?>
   </div>
 <?php endif; ?>
-
-<h2 class="h5 mb-3">Nouveautés au catalogue</h2>
-<div class="row g-3 row-cols-1 row-cols-sm-2 row-cols-lg-3">
-  <?php foreach ($nouveautes as $d): ?>
-    <div class="col">
-      <div class="card h-100">
-        <div class="card-body">
-          <span class="badge text-bg-light border mb-2"><?= e($d['categorie']) ?></span>
-          <h3 class="h6 card-title mb-1"><a href="document.php?code=<?= (int)$d['code_document'] ?>" class="stretched-link text-decoration-none"><?= e($d['titre']) ?></a></h3>
-          <p class="small text-muted mb-2"><?= e($d['auteur']) ?></p>
-          <?= badge_statut($d) ?>
-        </div>
-      </div>
-    </div>
-  <?php endforeach; ?>
-</div>
 
 <?php require 'includes/footer.php'; ?>

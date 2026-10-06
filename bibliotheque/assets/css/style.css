@@ -24,8 +24,6 @@
 
 /* Page de connexion */
 .page-login {
-  /* Astuce : ajoutez une photo de la bibliothèque avec
-     url('../img/bibliotheque.jpg') center/cover après le dégradé */
   background: linear-gradient(135deg, #0b4f6c, #083a50);
 }
 
@@ -51,10 +49,4 @@
   .table-empilee td[data-label]::before {
     content: attr(data-label) " : "; font-weight: 600; font-size: .85rem; color: var(--bs-secondary-color);
   }
-}
-
-/* Impression des rapports */
-@media print {
-  .table { font-size: 11px; }
-  a { text-decoration: none; color: #000; }
 }

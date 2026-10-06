@@ -58,12 +58,9 @@ $aujourdhui = date('Y-m-d');
 require 'includes/header.php';
 ?>
 
-<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-  <h1 class="h3 mb-0"><i class="bi bi-clipboard-data text-biblio"></i> Rapports</h1>
-  <button class="btn btn-sm btn-outline-secondary d-print-none" onclick="window.print()"><i class="bi bi-printer"></i> Imprimer</button>
-</div>
+<h1 class="h3 mb-3"><i class="bi bi-clipboard-data text-biblio"></i> Rapports</h1>
 
-<ul class="nav nav-pills flex-column flex-sm-row mb-4 d-print-none">
+<ul class="nav nav-pills flex-column flex-sm-row mb-4">
   <?php foreach ($rapports as $cle => [$lib, $ico]): ?>
     <li class="nav-item"><a class="nav-link<?= $cle === $r ? ' active' : '' ?>" href="?r=<?= $cle ?>"><i class="bi <?= $ico ?>"></i> <?= $lib ?></a></li>
   <?php endforeach; ?>

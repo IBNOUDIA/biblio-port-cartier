@@ -9,15 +9,6 @@ $titre = 'Comptoir';
 $doc    = (int)($_GET['doc'] ?? 0) ?: '';
 $membre = (int)($_GET['membre'] ?? 0) ?: '';
 
-// 10 dernières transactions de la journée (prêts et retours)
-$dernieres = db()->query("SELECT p.id_pret, p.statut, p.date_pret, p.date_retour_effective, p.code_membre, p.code_document,
-                                 d.titre, m.prenom, m.nom
-                            FROM pret p
-                            JOIN document d ON d.code_document = p.code_document
-                            JOIN membre m   ON m.code_membre   = p.code_membre
-                           WHERE p.date_pret = CURDATE() OR p.date_retour_effective = CURDATE()
-                           ORDER BY p.id_pret DESC LIMIT 10")->fetchAll();
-
 require 'includes/header.php';
 ?>
 
@@ -94,25 +85,5 @@ require 'includes/header.php';
 <p class="small text-muted mt-3"><i class="bi bi-info-circle"></i> Vous ne connaissez pas un code ?
   Cherchez le <a href="recherche.php">document</a> ou le <a href="membres.php">membre</a>.
   Pour annuler un prêt ou une réservation, ouvrez le dossier du membre ou la fiche du document.</p>
-
-<h2 class="h5 mt-4">Transactions d'aujourd'hui</h2>
-<div class="table-responsive">
-  <table class="table table-sm align-middle">
-    <thead class="table-light"><tr><th>No prêt</th><th>Document</th><th>Membre</th><th>Opération</th></tr></thead>
-    <tbody>
-    <?php foreach ($dernieres as $t): ?>
-      <tr>
-        <td><?= (int)$t['id_pret'] ?></td>
-        <td><a href="document.php?code=<?= (int)$t['code_document'] ?>"><?= e($t['titre']) ?></a></td>
-        <td><a href="membre.php?code=<?= (int)$t['code_membre'] ?>"><?= e($t['prenom'] . ' ' . $t['nom']) ?></a></td>
-        <td><?= ['actif' => '<span class="badge text-bg-warning">Prêté</span>',
-                 'retourne' => '<span class="badge text-bg-success">Retourné</span>',
-                 'annule' => '<span class="badge text-bg-secondary">Annulé</span>'][$t['statut']] ?></td>
-      </tr>
-    <?php endforeach; ?>
-    <?php if (!$dernieres): ?><tr><td colspan="4" class="text-muted">Aucune transaction aujourd'hui.</td></tr><?php endif; ?>
-    </tbody>
-  </table>
-</div>
 
 <?php require 'includes/footer.php'; ?>

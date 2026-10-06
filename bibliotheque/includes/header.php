@@ -17,7 +17,7 @@ $actif = fn(string ...$p) => in_array($page, $p, true) ? ' active" aria-current=
 </head>
 <body class="d-flex flex-column min-vh-100">
 
-<nav class="navbar navbar-expand-xl navbar-dark bg-biblio shadow-sm d-print-none">
+<nav class="navbar navbar-expand-xl navbar-dark bg-biblio shadow-sm">
   <div class="container">
     <a class="navbar-brand d-flex align-items-center gap-2" href="index.php">
       <i class="bi bi-book-half fs-4"></i>

@@ -1,8 +1,7 @@
 // Bibliothèque municipale de Port-Cartier — comportements côté client
 document.addEventListener('DOMContentLoaded', () => {
 
-  // 1) Confirmation avant les actions sensibles (annulations, retours…)
-  //    <form data-confirm="Message ?"> ou <button data-confirm="…">
+  // 1) Demander confirmation avant une annulation ou un emprunt (<form data-confirm="Message ?">)
   document.querySelectorAll('form[data-confirm]').forEach(form => {
     form.addEventListener('submit', ev => {
       if (!confirm(form.dataset.confirm)) ev.preventDefault();

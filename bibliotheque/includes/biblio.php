@@ -1,8 +1,8 @@
 <?php
 /**
- * Logique métier de la bibliothèque : prêts, réservations, retours, annulations.
- * Chaque fonction retourne un tableau ['ok' => bool, 'msg' => string, ...].
- * Toutes les opérations sont faites dans une transaction SQL.
+ * Règles de la bibliothèque : prêts, réservations, retours, annulations.
+ * Chaque fonction retourne ['ok' => vrai ou faux, 'msg' => message à afficher].
+ * Prêt, réservation et retour se font dans une transaction SQL : tout est enregistré, ou rien.
  */
 
 /* ---------------- Lectures ---------------- */
@@ -227,7 +227,6 @@ function retourner_document(int $codeDoc, ?int $codeEmploye): array
     $resultat = ['ok' => true, 'msg' => "Retour enregistré : « {$doc['titre']} » (emprunté par {$pret['prenom']} {$pret['nom']}).$retard"];
 
     if ($res) {
-        $resultat['reservation'] = $res;
         $resultat['alerte'] = "ATTENTION : ce document est RÉSERVÉ par {$res['prenom']} {$res['nom']} "
             . "(code {$res['code_membre']}, tél. {$res['telephone']}) depuis le " . date_fr($res['date_reservation'])
             . '. Ne le remettez pas en rayon : mettez-le de côté et avisez le membre.';
