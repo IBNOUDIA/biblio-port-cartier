@@ -58,6 +58,12 @@ function post(string $cle): string
     return trim((string)($_POST[$cle] ?? ''));
 }
 
+/** Met une majuscule à un nom tapé tout en minuscules (« naby fall » devient « Naby Fall »). */
+function majuscules_nom(string $nom): string
+{
+    return mb_strtolower($nom) === $nom ? mb_convert_case($nom, MB_CASE_TITLE) : $nom;
+}
+
 /** Motif LIKE « contient ce mot » : les caractères spéciaux % et _ sont cherchés tels quels. */
 function like_contient(string $mot): string
 {

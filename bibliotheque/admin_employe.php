@@ -9,6 +9,7 @@ $erreurs = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     csrf_verifier();
     foreach (array_keys($v) as $c) $v[$c] = post($c);
+    foreach (['prenom', 'nom'] as $c) $v[$c] = majuscules_nom($v[$c]);
     $mdp  = (string)($_POST['mot_de_passe'] ?? '');
     $mdp2 = (string)($_POST['mot_de_passe2'] ?? '');
 
