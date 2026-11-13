@@ -18,6 +18,8 @@ Fait avec **PHP 8, MySQL, HTML, CSS, JavaScript et Bootstrap 5** (inclus dans le
 5. Ouvrir http://localhost/biblio-port-cartier/bibliotheque/
 
 Avec Laragon déjà installé, un double-clic sur `demarrer_site.bat` démarre Apache et MySQL et ouvre le site.
+Juste avant une démonstration, un double-clic sur `reinitialiser_bd.bat` remet les données d'essai à neuf
+(les dates des prêts sont recalculées à partir du jour même).
 
 ## Comptes d'essai
 
@@ -75,7 +77,9 @@ Les mots de passe sont enregistrés chiffrés (`password_hash`).
 ```
 biblio-port-cartier/
 ├── demarrer_site.bat      démarre le site (Laragon)
+├── reinitialiser_bd.bat   remet les données de démonstration à neuf
 ├── sauvegarder_bd.bat     crée la sauvegarde de la base à remettre
+├── Documentation/         récapitulatif Word et schémas
 └── bibliotheque/
     ├── config.php         connexion à la base, durée d'un prêt
     ├── login.php, logout.php
@@ -94,6 +98,14 @@ biblio-port-cartier/
     ├── assets/            style, script, Bootstrap
     └── database/          script de création de la base
 ```
+
+## Documentation
+
+Le dossier `Documentation/` (à la racine du projet) contient :
+- `Recapitulatif_Bibliotheque.docx` : présentation, technologies, architecture, modèle de données,
+  correspondance pages ↔ tables, cas d'utilisation et barème, processus de prêt, sécurité ;
+- `schemas/` : les 5 schémas en image (modèle de données, architecture, correspondance pages ↔ tables,
+  cas d'utilisation, processus de prêt).
 
 ## Remise
 

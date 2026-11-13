@@ -6,6 +6,8 @@ Mot de passe de tous les comptes : **Biblio123!**
 ## Avant de commencer
 
 - [ ] Double-cliquer sur `demarrer_site.bat` : le site s'ouvre sur la page de connexion.
+- [ ] Double-cliquer sur `reinitialiser_bd.bat`, puis taper **O** : la base revient à son état de démonstration,
+      avec des dates recalculées à partir d'aujourd'hui (les essais des répétitions sont effacés).
 - [ ] Les données de départ sont en place : *Les Misérables* (50001) est prêté à Julie, en retard,
       et réservé par Awa ; *Le Petit Prince* (50005) est réservé par Nicolas ; *Mission Galaxie* (50008) est prêté à Nicolas.
 - [ ] Après 20 minutes sans rien faire, le site déconnecte automatiquement : il suffit de se reconnecter.
